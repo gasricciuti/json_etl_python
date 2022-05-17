@@ -45,5 +45,22 @@ if __name__ == '__main__':
     # para imprimir cuantos títulos completó cada usuario
     # y verifique si los primeros usuarios (mirando la página a ojo)
     # los datos recolectados son correctos.
+    
+    response = requests.get("https://jsonplaceholder.typicode.com/todos")
+    data = response.json()
+
+    user_true = [user for user in data if user['completed'] == True]
+
+    with open('usuarios_true.json', 'w') as jsonfile:
+        data = [user_true]
+        json.dump(data, jsonfile, indent=4)
+
+
+    # Como  algo esto? Siigo hasta el 10?
+    user_01 = [user for user in user_true if user['userId'] == 1] 
+    user_02 = [user for user in user_true if user['userId'] == 2]
+    user_03 = [user for user in user_true if user['userId'] == 3]
+    
+    # Despues de eso nose como graficarlo
 
     print("terminamos")
