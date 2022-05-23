@@ -7,10 +7,11 @@
 # IMPORTANTE: NO borrar los comentarios
 # que aparecen en verde con el hashtag "#"
 
+from cProfile import label
 import json
 import requests
-
 import matplotlib.pyplot as plt
+
 
 
 if __name__ == '__main__':
@@ -45,22 +46,44 @@ if __name__ == '__main__':
     # para imprimir cuantos títulos completó cada usuario
     # y verifique si los primeros usuarios (mirando la página a ojo)
     # los datos recolectados son correctos.
-    
+
     response = requests.get("https://jsonplaceholder.typicode.com/todos")
+    data = json.loads(response.text)
     data = response.json()
 
-    user_true = [user for user in data if user['completed'] == True]
+    user_true = [user['userId'] for user in data if user.get('completed') is True]
+
+    print(user_true)
 
     with open('usuarios_true.json', 'w') as jsonfile:
         data = [user_true]
         json.dump(data, jsonfile, indent=4)
 
+    data = {}
 
-    # Como  algo esto? Siigo hasta el 10?
-    user_01 = [user for user in user_true if user['userId'] == 1] 
-    user_02 = [user for user in user_true if user['userId'] == 2]
-    user_03 = [user for user in user_true if user['userId'] == 3]
+    for i in user_true:
+        if (i in data) == False:
+            data[i] = 0
+        else:
+            data[i] += 1
     
-    # Despues de eso nose como graficarlo
+    x = []
+    y = []
+
+    for i in data:
+        x.append(i)
+        y.append(data[i])
+
+    # Grafico
+
+    fig = plt.figure()
+    fig.suptitle('Ejercicios de práctica 2', fontsize=16)
+    ax = fig.add_subplot()
+
+    ax.bar(x, y, label='Completos')
+    ax.set_facecolor('whitesmoke')
+    ax.legend()
+    plt.show()
+
 
     print("terminamos")

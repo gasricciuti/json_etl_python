@@ -32,6 +32,26 @@ def serializar():
 
     # Observe el archivo y verifique que se almaceno lo deseado
 
+    json_data = {
+                "nombre": "gaston",
+                "apellido": "ricciuti",
+                "dni": "32025697",
+                "indumentaria": [
+                      {
+                       "prenda": "zapatillas",
+                       "cantidad": 4
+                      },
+                      {
+                       "prenda": "remeras",
+                       "cantidad": 12
+                      }
+                      ]
+                }
+                
+    with open('dato_personal.json', 'w') as jsonfile:
+        data = [json_data]
+        json.dump(data, jsonfile, indent=4)
+         
 
 def deserializar():
     print("Funcion que lee un archivo JSON")
@@ -44,6 +64,35 @@ def deserializar():
     # el método "dumps" y finalmente imprimir en pantalla el resultado
     # Recuerde utilizar indent=4 para poder observar mejor el resultado
     # en pantalla y comparelo contra el JSON que generó en la función anterior
+
+    json_data = {
+                "nombre": "ariel",
+                "apellido": "montalvo",
+                "dni": "31325607",
+                "indumentaria": [
+                      {
+                       "prenda": "zapatillas",
+                       "cantidad": 6
+                      },
+                      {
+                       "prenda": "remeras",
+                       "cantidad": 24
+                      }
+                      ]
+                }
+  
+
+    with open('dato_personal.json', 'r') as jsonfile:
+        current_data = json.load(jsonfile)
+        current_data.append(json_data)
+
+    with open('dato_personal.json', 'w') as jsonfile:
+        json.dump(current_data, jsonfile, indent=4)
+
+    with open('dato_personal.json', 'r') as jsonfile:
+        dato_personal = json.load(jsonfile)
+
+    print(json.dumps(dato_personal, indent=4))    
 
 if __name__ == '__main__':
     print("Bienvenidos a otra clase de Inove con Python")
